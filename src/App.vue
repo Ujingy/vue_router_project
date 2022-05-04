@@ -1,33 +1,69 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/new">New</router-link>
-    </nav>
-    <router-view />
-  </div>
+  <v-app>
+    <v-navigation-drawer app>
+      <!-- -->
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6">Vue-Project</v-list-item-title>
+          <v-list-item-subtitle> 님 환영합니다. </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list dense nav>
+        <v-list-item v-for="(item, key) in menuList" :key="key" :to="item.path">
+          <v-list-item-icon>
+            <v-icon>{{ item.meta.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+    </v-navigation-drawer>
+
+    <v-app-bar app color="primary" dark>
+      <v-app-bar-title>{{ title }}</v-app-bar-title>
+    </v-app-bar>
+
+    <v-main>
+      <router-view />
+    </v-main>
+
+    <v-footer app color="primary lighten-1" padless>
+      <!-- -->
+      <v-row justify="center" no-gutters>
+        <v-btn
+          v-for="link in links"
+          :key="link"
+          color="white"
+          text
+          rounded
+          class="my-2"
+        >
+          {{ link }}
+        </v-btn>
+        <v-col class="primary lighten-2 py-4 text-center white--text" cols="12">
+          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        </v-col>
+      </v-row>
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapGetters } from "vuex";
+export default {
+  name: "App",
 
-nav {
-  padding: 30px;
-}
+  data: () => ({
+    links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
+  }),
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  computed: {
+    ...mapGetters("page", ["menuList", "title"]),
+  },
+};
+</script>

@@ -1,5 +1,7 @@
 <template>
-  <div>안녕하세요! Vue.js 심화과정 실전기반 프로젝트입니다.</div>
+  <div>
+    <h1 style="margin: 20px">새로운 페이지입니다.</h1>
+  </div>
 </template>
 
 <script>
