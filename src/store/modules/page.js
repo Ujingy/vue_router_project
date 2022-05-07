@@ -45,7 +45,7 @@ export default {
         name: `axios`,
         meta: {
           title: `Axios`,
-          icon: `edit`,
+          icon: `search`,
         },
         component: AxiosView,
       },
