@@ -1,6 +1,7 @@
 <template>
-  <div id="New">
+  <div class="new">
     <h1 style="margin: 20px">새로운 페이지입니다.</h1>
+    <v-divider></v-divider>
     <Todolist></Todolist>
   </div>
 </template>

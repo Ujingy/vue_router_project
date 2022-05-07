@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1 style="margin: 20px">This is an about page</h1>
+    <h1 style="margin: 20px">심화 과정 수업 내용 안내 페이지입니다.</h1>
     <v-divider></v-divider>
     <h3 style="margin: 20px">Vue.js 기반 실전 프로젝트</h3>
     <ol style="margin: 20px">

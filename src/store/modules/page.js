@@ -1,6 +1,7 @@
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import NewView from "@/views/NewView.vue";
+import AxiosView from "@/views/AxiosView.vue";
 
 export default {
   namespaced: true,
@@ -38,6 +39,15 @@ export default {
           icon: `event`,
         },
         component: NewView,
+      },
+      axios: {
+        path: `/axios`,
+        name: `axios`,
+        meta: {
+          title: `Axios`,
+          icon: `edit`,
+        },
+        component: AxiosView,
       },
     },
 
