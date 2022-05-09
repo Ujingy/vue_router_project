@@ -2,6 +2,9 @@ import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import NewView from "@/views/NewView.vue";
 import AxiosView from "@/views/AxiosView.vue";
+import SignUpView from "@/views/SignUpView.vue";
+import LoginView from "@/views/LoginView.vue";
+import DeleteUserView from "@/views/DeleteUserView.vue";
 
 export default {
   namespaced: true,
@@ -48,6 +51,33 @@ export default {
           icon: `search`,
         },
         component: AxiosView,
+      },
+      signup: {
+        path: `/signup`,
+        name: `signup`,
+        meta: {
+          title: `Signup`,
+          icon: `edit`,
+        },
+        component: SignUpView,
+      },
+      login: {
+        path: `/login`,
+        name: `login`,
+        meta: {
+          title: `Login`,
+          icon: `login`,
+        },
+        component: LoginView,
+      },
+      deleteuser: {
+        path: `/delete`,
+        name: `delete`,
+        meta: {
+          title: `DeleteUser`,
+          icon: `delete`,
+        },
+        component: DeleteUserView,
       },
     },
 
