@@ -1,10 +1,11 @@
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
-import NewView from "@/views/NewView.vue";
 import AxiosView from "@/views/AxiosView.vue";
-import SignUpView from "@/views/SignUpView.vue";
-import LoginView from "@/views/LoginView.vue";
-import DeleteUserView from "@/views/DeleteUserView.vue";
+import NewView from "@/views/NewView.vue";
+import UserView from "@/views/UserView.vue";
+import LoginView from "@/views/login/LoginView.vue";
+// import SignUpView from "@/views/login/SignUpView.vue";
+// import DeleteUserView from "@/views/DeleteUserView.vue";
 
 export default {
   namespaced: true,
@@ -21,6 +22,7 @@ export default {
         meta: {
           title: `Home`,
           icon: `home`,
+          display: true,
         },
         component: HomeView,
       },
@@ -31,15 +33,17 @@ export default {
         meta: {
           title: `About`,
           icon: `question_mark`,
+          display: true,
         },
         component: AboutView,
       },
       new: {
-        path: `/new`,
-        name: `new`,
+        path: `/todo`,
+        name: `todo`,
         meta: {
-          title: `New`,
+          title: `ToDo`,
           icon: `event`,
+          display: true,
         },
         component: NewView,
       },
@@ -49,17 +53,19 @@ export default {
         meta: {
           title: `Axios`,
           icon: `search`,
+          display: true,
         },
         component: AxiosView,
       },
-      signup: {
-        path: `/signup`,
-        name: `signup`,
+      user: {
+        path: `/user`,
+        name: `user`,
         meta: {
-          title: `Signup`,
-          icon: `edit`,
+          title: `User`,
+          icon: `account_circle`,
+          display: true,
         },
-        component: SignUpView,
+        component: UserView,
       },
       login: {
         path: `/login`,
@@ -67,25 +73,35 @@ export default {
         meta: {
           title: `Login`,
           icon: `login`,
+          display: false,
         },
         component: LoginView,
       },
-      deleteuser: {
-        path: `/delete`,
-        name: `delete`,
-        meta: {
-          title: `DeleteUser`,
-          icon: `delete`,
-        },
-        component: DeleteUserView,
-      },
+      // signup: {
+      //   path: `/signup`,
+      //   name: `signup`,
+      //   meta: {
+      //     title: `Signup`,
+      //     icon: `edit`,
+      //   },
+      //   component: SignUpView,
+      // },
+      // deleteuser: {
+      //   path: `/delete`,
+      //   name: `delete`,
+      //   meta: {
+      //     title: `DeleteUser`,
+      //     icon: `delete`,
+      //   },
+      //   component: DeleteUserView,
+      // },
     },
 
-    // visible: {
-    //   header: true,
-    //   navi: true,
-    //   footer: true,
-    // },
+    visible: {
+      header: true,
+      navi: true,
+      footer: true,
+    },
   },
 
   getters: {
@@ -101,9 +117,13 @@ export default {
       return state.list;
     },
 
-    // visible(state) {
-    //   return state.visible;
-    // },
+    visible(state) {
+      return state.visible;
+    },
+    // list의 object키를 파라미터로 받으면 해당 키에 대한 path를 베이스 path와 합쳐서 반환.
+    getPath: (state, getters) => (listKey) => {
+      return `${getters.basePath}${state.list[listKey].path}`;
+    },
   },
 
   mutations: {
@@ -111,9 +131,11 @@ export default {
       state.title = title;
     },
 
-    // setVisible(state, { key, value }) {
-    //   state[key] = value;
-    // },
+    setAllVisible(state, value) {
+      state.visible.header = value;
+      state.visible.navi = value;
+      state.visible.footer = value;
+    },
   },
 
   actions: {
@@ -121,8 +143,13 @@ export default {
       commit("setTitle", title);
     },
 
-    // setVisible({ commit }, payload) {
-    //   commit("setVisible", payload);
-    // },
+    /**
+     * template에 해당하는 태그들의 유무를 컨트롤
+     * @param {*} param0
+     * @param {*} value
+     */
+    setAllVisible({ commit }, value) {
+      commit("setAllVisible", value);
+    },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="new">
+  <div class="todo">
     <h1 style="margin: 20px">To-Do List 기능을 구현한 새로운 페이지입니다.</h1>
     <v-divider></v-divider>
     <Todolist></Todolist>
@@ -9,7 +9,7 @@
 <script>
 import Todolist from "../components/Todolist.vue";
 export default {
-  name: "New",
+  name: "todo",
   components: { Todolist },
 };
 </script>

@@ -126,7 +126,7 @@ export default {
     callWebData() {
       axios
         .get(
-          `https://dapi.kakao.com/v2/search/web?query=${this.search}&page=1&size=10&sort=accuracy`,
+          `https://dapi.kakao.com/v2/search/web?query=${this.search}&page=1&size=20&sort=accuracy`,
           {
             headers: {
               Authorization: `KakaoAK ${process.env.VUE_APP_KAKAO_KEY}`,
@@ -144,7 +144,7 @@ export default {
     callBookData() {
       axios
         .get(
-          `https://dapi.kakao.com//v3/search/book?query=${this.search}&page=1&size=10&sort=accuracy`,
+          `https://dapi.kakao.com//v3/search/book?query=${this.search}&page=1&size=20&sort=accuracy`,
           {
             headers: {
               Authorization: `KakaoAK ${process.env.VUE_APP_KAKAO_KEY}`,

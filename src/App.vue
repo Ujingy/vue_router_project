@@ -1,69 +1,69 @@
 <template>
-  <v-app>
-    <v-navigation-drawer app>
-      <!-- -->
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="text-h6">Vue-Project</v-list-item-title>
-          <v-list-item-subtitle> 님 환영합니다. </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+  <v-app id="app">
+    <NavView></NavView>
 
-      <v-divider></v-divider>
+    <HeaderView></HeaderView>
 
-      <v-list dense nav>
-        <v-list-item v-for="(item, key) in menuList" :key="key" :to="item.path">
-          <v-list-item-icon>
-            <v-icon>{{ item.meta.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.name }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-divider></v-divider>
-    </v-navigation-drawer>
+    <MainView></MainView>
 
-    <v-app-bar app color="primary" dark>
-      <v-app-bar-title>{{ title }}</v-app-bar-title>
-    </v-app-bar>
-
-    <v-main>
-      <router-view />
-    </v-main>
-
-    <v-footer app color="primary lighten-1" padless>
-      <!-- -->
-      <v-row justify="center" no-gutters>
-        <v-btn
-          v-for="link in links"
-          :key="link"
-          color="white"
-          text
-          rounded
-          class="my-2"
-        >
-          {{ link }}
-        </v-btn>
-        <v-col class="primary lighten-2 py-4 text-center white--text" cols="12">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-        </v-col>
-      </v-row>
-    </v-footer>
+    <FooterView></FooterView>
   </v-app>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import NavView from "./views/layout/NavView.vue";
+import HeaderView from "./views/layout/HeaderView.vue";
+import FooterView from "./views/layout/FooterView.vue";
+import MainView from "./views/layout/MainView.vue";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "App",
-
-  data: () => ({
-    links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
-  }),
-
+  data: () => ({}),
+  components: {
+    NavView,
+    HeaderView,
+    MainView,
+    FooterView,
+  },
   computed: {
-    ...mapGetters("page", ["menuList", "title"]),
+    ...mapGetters("page", ["menuList", "basePath", "getPath"]),
+    ...mapGetters("user", ["hasToken"]),
+  },
+  methods: {
+    ...mapActions("user", ["setName", "setId"]),
+    checkToken() {
+      const nowPath = window.location.pathname;
+      // 현재 토큰이 있는지 확인 .
+      if (this.hasToken && nowPath !== this.getPath("home")) {
+        // 토큰이 존재할 때 홈으로 이동.
+        this.$router.push({ path: this.menuList.home.path });
+      } else if (!this.hasToken && nowPath !== this.getPath("login")) {
+        // 토큰이 없을 때 로그인 페이지로 이동.
+        this.$router.push({ path: this.menuList.login.path });
+      }
+    },
+    async getUserInfo() {
+      /**
+       * 토큰이 있을 때 유저 정보 호출 구현.
+       *
+       * vuex 유저정보 갱신
+       */
+      if (this.hasToken) {
+        const { data: user } = await this.$api(`/api/auth/user`, "get");
+        this.setId(user.id);
+        this.setName(user.name);
+      }
+    },
+  },
+  created() {
+    this.checkToken();
+    this.getUserInfo();
+  },
+  watch: {
+    hasToken: function () {
+      this.checkToken();
+    },
   },
 };
 </script>
