@@ -70,7 +70,7 @@ export default {
       if (response?.status === this.HTTP_OK) {
         const token = response.data.token;
         this.setToken(token);
-        location.href = "/";
+        location.href = "/vue_router_project";
       }
     },
   },

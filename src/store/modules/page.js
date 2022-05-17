@@ -13,7 +13,7 @@ export default {
   state: {
     title: "",
 
-    basePath: "",
+    basePath: "/vue_router_project",
 
     list: {
       home: {
